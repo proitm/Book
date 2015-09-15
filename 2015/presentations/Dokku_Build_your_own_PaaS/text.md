@@ -42,8 +42,8 @@ SSH into your host machine and run the following command:
 server $ wget -qO- https://raw.github.com/progrium/dokku/v0.3.26/bootstrap.sh | sudo DOKKU_TAG=v0.3.26 bash
 ```
 Please, **notice** that I use the latest version of Dokku (0.3.26) for this moment.
-Also, I want to emphasize that you have to run installation using **sudo** even if you are logged in via root user. This is important as this instalaltor creates a custom dokku user for executing commands and it is important to make sure if this user has enough permissions for building packages, creating configs and required directories. Otherwise your future project builds will fail.
-After script finish you need to go back to your local machine console and run the following:
+Also, I want to emphasize that you have to run installation using **sudo** even if you are logged in with root user. Otherwise, in case of python application, dokku will try to rebuild python on deploy.
+After script finishes you need to go back to your local machine console and run the following:
 ```
 $ cat ~/.ssh/id_rsa.pub | ssh root@<machine-address> "sudo sshcommand acl-add dokku <your-app-name>"
 ```
@@ -53,7 +53,7 @@ Where `<machine-address>` is ip or hostname of your server and `<your-app-name>`
 This guideline shows how fast and easy you can set up your own PaaS. In
 this example we will install Dokku on the server and deploy "Hello, world" Django application.
 
-Clone any sample django application from github, cd to tha application's directory and add dokku as remote server by:
+Clone any sample django application from github, cd to the application's directory and add dokku as remote server by:
   ```
   local $ git remote add dokku dokku@<machine-address>:<your-app-name>
   ```
@@ -68,11 +68,11 @@ If your application requires additional dependencies like database or cache serv
 ## Buildpacks or why previous section is so short
 If you are curious, why application deployment described in the previous section is so short and where are dependencies installation and lots of other stuff, this section is for you.
 
-So what is exactly **buildpack** and what black magic it does?
+So what exactly is a **buildpack** and what kind black magic it does?
 
 **Buildpack** is a bunch of scripts for building container image.
 
-So what Dokku does is exactly determining what buildpack is required for your application and building a new contanier for your project. As the result you have a very high level of isolation for your applications and an awesome orchestration solution. Notice, that Dokku is compatible with Heroku buildpacks.
+So what Dokku does is, determining exactly which buildpack is required for your application and build a new contanier for your project. As the result you have a very high level of isolation for your applications and an awesome orchestration solution. Notice, that Dokku is compatible with Heroku buildpacks.
 
 But what if Dokku doesn't determine a buildpack for your application correctly?
 
